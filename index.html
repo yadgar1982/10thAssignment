@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zabeehullah Yadgar 10th Week Assignment</title>
+    <!-- <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css"> -->
+    <link rel="stylesheet" href="./styles.css" media="all">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"  
+</head>
+<body class="body">
+    
+
+    <!-- if we put this inside a form the enter key will work as click! and refresh the page -->
+    <!-- if we make the type = button it will not work as click on enter. it is better to use event object for page refresh -->
+    
+    <div class= "container mt-4">
+        <div class="form-fluid mb-3">
+            <input type="text" class="form-control" id="input-textbox" placeholder="Serial">
+            <label for="floatingInput">Enter Number</label>
+        </div>
+        <div class="form-fluid">
+            <input type="text" class="form-control" id="input-textbox1" placeholder="Full Name">
+            <label for="floatingName">Full Name</label>
+            
+        </div>
+        <button class="btn btn-success" onclick="onButtonClick(event)" >Submit</button></p>
+        
+        <table class="table table-success table-striped"class="table"><p1 class="h1">My Team List</p1>
+            <thead>
+            <tr>
+                <th  scope="col">ID Number</th>
+                <th  scope="col">Full Name</th>
+                <th class="th" scope="col">Delete</th>
+            </tr>
+            </thead>
+            <tbody id="table-body">
+            
+            </tbody>
+        </table>
+        <button class="btn btn-danger" onclick="clearTheTable()">Delete all</button>
+
+    </div>
+    <!-- putting javascript staright in here for convenience of demo. FINDING:  --> 
+    <script>
+        // console.log(document.getElementById("table-body")) now I can use it by making a variable: 
+        // by default any button inside a form is a submitt button.
+
+        let teamList=[]
+        const tableBody= document.getElementById("table-body")
+        const input =document.querySelector("#input-textbox")
+        const input1 =document.querySelector("#input-textbox1")
+        
+
+        function onButtonClick(event){
+            event.preventDefault()// prevents the default behavior of the event (which is this case, is refreshing the pge)
+    
+            //make the change to the data:
+            teamList.push(input.value, input1.value)
+            // teamList.push(input1.value)
+
+
+            //we mad a new little <tr> but not in the page yet!
+            const newRow = document.createElement("tr")
+            newRow.innerHTML=`
+                <td>${input.value}</td>
+                <td>${input1.value}</td>
+                <td><button id="delete-button" type="button" class="btn btn-danger">Delete</button></td>
+            `
+            newRow.querySelector("#delete-button").addEventListener("click",()=>{
+                
+                console.log(newRow)
+                newRow.remove()
+
+                
+                //remove it from data and page. 
+                // const indexToRemove = teamList.indexOf(input.value , input1.value)
+                const indexToRemove = teamList.indexOf(input.value)
+                const indexToRemove1 = teamList.indexOf( input1.value)
+                teamList.splice(indexToRemove,1)
+                teamList.splice(indexToRemove,1)
+                newRow.remove()
+
+            })
+        
+            tableBody.appendChild(newRow)
+            
+            input.value =""
+            input1.value =""
+            
+        
+
+
+
+
+        }
+
+        function clearTheTable(){
+            alert("All the Data Deleted from the list!")
+            //remove from html
+            while(tableBody.hasChildNodes()){
+                tableBody.removeChild(tableBody.lastChild)
+            }
+            //remove from the data
+            teamList=[]
+        }
+
+
+
+
+    </script>
+</body>
+</html>
